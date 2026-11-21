@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lovely</title>
+    <!-- Fonts: Prompt & Quicksand for Soft Cute Vibe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tone.js for Cute Sound Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+    <style>
+        /* CSS Custom Properties (Design Tokens) */
+        :root {
+            --primary: #ff85a2;
+            --primary-light: #ffb3c6;
+            --primary-soft: #ffe5ec;
+            --primary-bg: #fff8fa;
+            --primary-dark: #e05780;
+            --text-main: #5c434a;
+            --text-muted: #9e7e87;
+            --surface-card: rgba(255, 255, 255, 0.88);
+            --surface-input: #ffffff;
+            --surface-soft: rgba(255, 229, 236, 0.55);
+            --surface-elevated: #ffffff;
+            --border-soft: var(--primary-soft);
+            --shadow-card: 0 8px 24px -4px rgba(255, 133, 162, 0.12);
+        }
+
+        body.dark-mode {
+            --surface-card: rgba(24, 17, 23, 0.94);
+            --surface-input: #1d141c;
+            --surface-soft: rgba(255, 255, 255, 0.06);
+            --surface-elevated: #20161f;
+            --surface-subcard: #291d28;
+            --surface-pill-active: #382737;
+            --border-soft: rgba(255, 255, 255, 0.11);
+            --shadow-card: 0 14px 34px -10px rgba(0, 0, 0, 0.72);
+        }
+
+        :root {
+            --surface-subcard: #ffffff;
+            --surface-pill-active: #ffffff;
+        }
+
+        body.dark-mode .bg-pink-50,
+        body.dark-mode .bg-pink-50\/50,
+        body.dark-mode .bg-pink-50\/60,
+        body.dark-mode .bg-pink-50\/70,
+        body.dark-mode .bg-pink-50\/80,
+        body.dark-mode .bg-pink-50\/90 {
+            background-color: rgba(255, 255, 255, 0.06) !important;
+        }
+
+        body.dark-mode .bg-pink-100,
+        body.dark-mode .bg-pink-100\/70,
+        body.dark-mode .bg-pink-100\/80 {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.dark-mode .bg-white,
+        body.dark-mode .bg-white\/80,
+        body.dark-mode .bg-white\/90 {
+            background-color: #241923 !important;
+        }
+
+        body.dark-mode .border-pink-100,
+        body.dark-mode .border-pink-200 {
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        body.dark-mode .text-gray-500,
+        body.dark-mode .text-gray-600 {
+            color: var(--text-muted) !important;
+        }
+
+        body.dark-mode .bg-gray-100 {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        body {
+            font-family: 'Prompt', 'Quicksand', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            background-image:
+                radial-gradient(circle at 15% 15%, var(--primary-soft) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, var(--primary-soft) 0%, transparent 45%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+
+        /* Animations */
+        @keyframes spinHeart {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.15) rotate(10deg); }
+            50% { transform: scale(1) rotate(0deg); }
+            75% { transform: scale(1.15) rotate(-10deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        .animate-heart-spin {
+            animation: spinHeart 1.8s ease-in-out infinite;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .animate-float {
+            animation: floatSlow 3.5s ease-in-out infinite;
+        }
+
+        .cute-bounce {
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+        }
+        .cute-bounce:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+        .cute-bounce:active {
+            transform: scale(0.95);
+        }
+
+        /* Soft Glow & Borders */
+        .cute-card {
+            background: var(--surface-card);
+            backdrop-filter: blur(12px);
+            border: 1.5px solid var(--border-soft);
+            box-shadow: var(--shadow-card);
+            border-radius: 28px;
+        }
+
+        .cute-input {
+            background: var(--surface-input);
+            border: 1.5px solid var(--border-soft);
+            border-radius: 18px;
+            color: var(--text-main);
+            transition: all 0.25s ease;
+        }
+        .cute-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.78;
+        }
+        .cute-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
+        .color-wheel-ring {
+            width: 84px;
+            height: 84px;
+            border-radius: 9999px;
+            background: conic-gradient(
+                #ff5e7e,
+                #ffb347,
+                #ffe66d,
+                #4fd1c5,
+                #63b3ed,
+                #a78bfa,
+                #ff5e7e
+            );
+            padding: 6px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(255, 133, 162, 0.35);
+        }
+
+        /* Scroll Reveal */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Equalizer Animation */
+        @keyframes eqBar {
+            0%, 100% { height: 4px; }
+            50% { height: 14px; }
+        }
+        .eq-bar {
+            width: 3px;
+            background-color: var(--primary);
+            border-radius: 99px;
+            height: 6px;
+        }
+        .playing .eq-bar:nth-child(1) { animation: eqBar 0.6s infinite ease-in-out; }
+        .playing .eq-bar:nth-child(2) { animation: eqBar 0.8s infinite ease-in-out 0.2s; }
+        .playing .eq-bar:nth-child(3) { animation: eqBar 0.5s infinite ease-in-out 0.4s; }
+    </style>
+</head>
+<body class="min-h-screen pb-28 selection:bg-pink-200 selection:text-pink-900">
+
+    <!-- 1. Loading Screen with Spinning Heart -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-700" style="background-color: var(--primary-bg);">
+        <div class="relative flex items-center justify-center">
+            <div class="w-24 h-24 rounded-full bg-pink-100/70 animate-ping absolute"></div>
+            <div class="w-20 h-20 rounded-full shadow-lg border-2 border-pink-100 flex items-center justify-center relative z-10" style="background-color: var(--surface-elevated);">
+                <i class="fa-solid fa-heart text-4xl animate-heart-spin" style="color: var(--primary);"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 w-11/12 max-w-sm pointer-events-none"></div>
+
+    <!-- Custom Modal Container -->
+    <div id="modal-overlay" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+        <div id="modal-box" class="rounded-3xl p-6 w-full max-w-sm border-2 border-pink-100 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[88vh] overflow-y-auto" style="background-color: var(--surface-elevated); border-color: var(--border-soft); color: var(--text-main);">
+            <!-- Modal content injected by JS -->
+        </div>
+    </div>
+
+    <!-- Hidden YouTube Player Container -->
+    <div id="yt-player-wrapper" class="fixed -top-96 -left-96 opacity-0 pointer-events-none">
+        <div id="yt-player"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div id="app-wrapper" class="max-w-lg mx-auto px-4 pt-5 opacity-0 transition-opacity duration-700">
+
+        <!-- Top Floating Header Bar -->
+        <header class="flex items-center justify-between mb-4 px-2 reveal-item">
+            <div class="flex items-center gap-2">
+                <button id="btn-back-client" onclick="exitAdminMode()" class="hidden cute-bounce px-3 py-1.5 rounded-full border text-xs font-medium flex items-center gap-1.5" style="background-color: var(--surface-soft); border-color: var(--border-soft); color: var(--primary-dark);">
+                    <i class="fa-solid fa-store"></i>
+                    
+                </button>
+                <button id="btn-toggle-darkmode" onclick="toggleDarkMode()" class="cute-bounce w-9 h-9 rounded-full border shadow-xs flex items-center justify-center text-sm" style="background-color: var(--surface-card); border-color: var(--border-soft); color: var(--primary);" title="สลับโหมดมืด / สว่าง">
+                    <i id="darkmode-icon" class="fa-solid fa-moon"></i>
+                </button>
+                <button onclick="openAdminLogin()" class="cute-bounce w-9 h-9 rounded-full border shadow-xs flex items-center justify-center text-sm" style="background-color: var(--surface-card); border-color: var(--border-soft); color: var(--primary);" title="จัดการหลังบ้าน">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- ================= CLIENT VIEW ================= -->
+        <main id="client-view" class="space-y-5">
+
+            <!-- Profile & Banner Card (Unique Floating Capsule Design) -->
+            <section class="cute-card overflow-hidden reveal-item">
+                <!-- Banner -->
+                <div class="relative h-36 sm:h-40 w-full bg-pink-100 overflow-hidden">
+                    <img id="display-banner" src="" alt="Store Banner" onerror="this.src='https://placehold.co/800x320/ffe5ec/e05780?text=Sweetie+Banner'" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent"></div>
+                </div>
+
+                <!-- Centered Avatar & Info -->
+                <div class="px-6 pb-6 text-center relative -mt-14">
+                    <div class="inline-block relative animate-float">
+                        <div class="w-28 h-28 rounded-full p-1.5 bg-white shadow-md border-2 border-pink-100 mx-auto">
+                            <img id="display-avatar" src="" alt="Store Avatar" onerror="this.src='https://placehold.co/240x240/ffe5ec/e05780?text=Sweetie'" class="w-full h-full object-cover rounded-full">
+                        </div>
+                    </div>
+
+                    <h1 id="display-shop-name" class="mt-3 text-xl font-semibold tracking-tight" style="color: var(--text-main);">Loading...</h1>
+                    <p id="display-welcome-msg" class="mt-1.5 text-sm leading-relaxed max-w-xs mx-auto" style="color: var(--text-muted);">...</p>
+
+                    <!-- Mini Stats Pills -->
+                    <div class="flex items-center justify-center gap-2.5 mt-4">
+                        <span class="px-3.5 py-1 rounded-full text-xs font-medium bg-pink-50 border border-pink-100 flex items-center gap-1.5" style="color: var(--primary-dark);">
+                            <i class="fa-solid fa-heart"></i>
+                            <span id="stat-avg-badge">5.0 / 5.0</span>
+                        </span>
+                        <span class="px-3.5 py-1 rounded-full text-xs font-medium bg-pink-50 border border-pink-100 flex items-center gap-1.5" style="color: var(--primary-dark);">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <span id="stat-count-badge">0 reviews</span>
+                        </span>
+                    </div>
+
+                    <!-- 2 Social Contact Channels -->
+                    <div id="social-links-container" class="grid grid-cols-2 gap-3 mt-5">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation Tabs (Reviews vs Payment) -->
+            <nav class="cute-card p-1.5 flex gap-1.5 reveal-item">
+                <button id="tab-btn-reviews" onclick="switchMainTab('reviews')" class="flex-1 py-2.5 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center gap-2 btn-primary">
+                    <i class="fa-solid fa-heart"></i>
+                    <span id="ui-tab-reviews">reviews</span>
+                </button>
+                <button id="tab-btn-payment" onclick="switchMainTab('payment')" class="flex-1 py-2.5 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center gap-2 text-gray-500 hover:bg-pink-50/70">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span id="ui-tab-payment">payment</span>
+                </button>
+            </nav>
+
+            <!-- TAB 1: REVIEWS & CREDIT SECTION -->
+            <div id="section-reviews" class="space-y-5">
+
+                <!-- Rating Summary Card -->
+                <div class="cute-card p-5 flex items-center justify-between reveal-item">
+                    <div>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span id="summary-avg-score" class="text-3xl font-bold" style="color: var(--primary);">5.0</span>
+                            <span class="text-sm font-medium" style="color: var(--text-muted);">/ 5.0</span>
+                        </div>
+                        <div id="summary-hearts" class="flex gap-1 mt-1.5 text-sm" style="color: var(--primary);">
+                            <i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="inline-flex flex-col items-center justify-center bg-pink-50/90 border border-pink-100 rounded-2xl px-4 py-2.5">
+                            <span id="summary-total-reviews" class="text-xl font-bold" style="color: var(--primary-dark);">0</span>
+                            <span id="ui-rating-unit" class="text-[11px]" style="color: var(--text-muted);">รีวิวทั้งหมด</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Write Review Form Card -->
+                <div class="cute-card p-5 reveal-item">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-2xl flex items-center justify-center text-white shadow-xs" style="background-color: var(--primary);">
+                                <i class="fa-solid fa-paper-plane text-sm"></i>
+                            </div>
+                            <div>
+                                <h2 id="ui-write-title" class="text-sm font-semibold">เขียนรีวิวที่นี่</h2>
+                                <p id="ui-write-subtitle" class="text-xs" style="color: var(--text-muted);">ส่งกำลังใจน่ารัก ๆ ได้เลยค่ะ</p>
+                            </div>
+                        </div>
+
+                        <!-- Heart Rating Selector (1-5) -->
+                        <div class="flex items-center gap-1 bg-pink-50/80 px-3 py-1.5 rounded-full border border-pink-100" id="heart-selector">
+                            <button type="button" onclick="selectRating(1)" class="heart-btn text-base transition-transform hover:scale-125" data-val="1"><i class="fa-regular fa-heart"></i></button>
+                            <button type="button" onclick="selectRating(2)" class="heart-btn text-base transition-transform hover:scale-125" data-val="2"><i class="fa-regular fa-heart"></i></button>
+                            <button type="button" onclick="selectRating(3)" class="heart-btn text-base transition-transform hover:scale-125" data-val="3"><i class="fa-regular fa-heart"></i></button>
+                            <button type="button" onclick="selectRating(4)" class="heart-btn text-base transition-transform hover:scale-125" data-val="4"><i class="fa-regular fa-heart"></i></button>
+                            <button type="button" onclick="selectRating(5)" class="heart-btn text-base transition-transform hover:scale-125" data-val="5"><i class="fa-regular fa-heart"></i></button>
+                        </div>
+                    </div>
+
+                    <form id="review-form" onsubmit="submitReview(event)" class="space-y-3">
+                        <div class="flex gap-2.5 items-center">
+                            <!-- Reviewer Avatar Upload -->
+                            <label class="cursor-pointer shrink-0 group relative" title="เลือกรูปโปรไฟล์">
+                                <input type="file" id="review-avatar-input" accept="image/*" class="hidden" onchange="handleReviewAvatarPreview(event)">
+                                <div class="w-11 h-11 rounded-2xl border-2 border-dashed border-pink-200 bg-pink-50/50 flex items-center justify-center overflow-hidden group-hover:border-pink-400 transition-colors">
+                                    <img id="review-avatar-preview" src="" alt="Preview" class="w-full h-full object-cover hidden">
+                                    <i id="review-avatar-icon" class="fa-solid fa-camera text-sm" style="color: var(--primary);"></i>
+                                </div>
+                            </label>
+
+                            <!-- Name Input (Optional) -->
+                            <input type="text" id="review-name-input" placeholder="ชื่อของคุณ (ไม่ระบุก็ได้ จะแสดงเป็น Anonymous)" class="cute-input w-full px-4 py-2.5 text-sm">
+                        </div>
+
+                        <!-- Review Message (Optional) -->
+                        <textarea id="review-text-input" rows="2" placeholder="พิมพ์ข้อความรีวิว... (หากเว้นว่างระบบจะใส่ +1 และให้ 5 หัวใจอัตโนมัติ)" class="cute-input w-full px-4 py-2.5 text-sm resize-none"></textarea>
+
+                        <div class="flex items-center justify-between pt-1">
+                            <span class="text-[11px]" style="color: var(--text-muted);">* สามารถกดส่งได้ทันทีโดยไม่ต้องกรอกข้อมูล</span>
+                            <button type="submit" id="ui-btn-submit-review" class="cute-bounce btn-primary px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                                <i class="fa-solid fa-heart"></i>
+                                <span>ส่งรีวิว</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Review List & Filter -->
+                <div class="cute-card p-5 reveal-item">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <h3 id="ui-list-title" class="text-sm font-semibold flex items-center gap-2">
+                            <i class="fa-solid fa-sparkles" style="color: var(--primary);"></i>
+                            <span>รีวิวจากลูกค้าที่น่ารัก</span>
+                        </h3>
+
+                        <!-- Filter Buttons -->
+                        <div class="flex items-center gap-1 bg-pink-50/80 p-1 rounded-full border border-pink-100 text-xs">
+                            <button onclick="filterReviews('all')" class="filter-btn active px-2.5 py-1 rounded-full font-medium transition-all bg-white shadow-xs" data-filter="all">all</button>
+                            <button onclick="filterReviews(5)" class="filter-btn px-2.5 py-1 rounded-full transition-all inline-flex items-center gap-0.5" data-filter="5">5<i class="fa-solid fa-heart text-[10px]" style="color: var(--primary);"></i></button>
+                            <button onclick="filterReviews(4)" class="filter-btn px-2.5 py-1 rounded-full transition-all inline-flex items-center gap-0.5" data-filter="4">4<i class="fa-solid fa-heart text-[10px]" style="color: var(--primary);"></i></button>
+                            <button onclick="filterReviews(3)" class="filter-btn px-2.5 py-1 rounded-full transition-all inline-flex items-center gap-0.5" data-filter="3">3<i class="fa-solid fa-heart text-[10px]" style="color: var(--primary);"></i></button>
+                            <button onclick="filterReviews(2)" class="filter-btn px-2.5 py-1 rounded-full transition-all inline-flex items-center gap-0.5" data-filter="2">2<i class="fa-solid fa-heart text-[10px]" style="color: var(--primary);"></i></button>
+                            <button onclick="filterReviews(1)" class="filter-btn px-2.5 py-1 rounded-full transition-all inline-flex items-center gap-0.5" data-filter="1">1<i class="fa-solid fa-heart text-[10px]" style="color: var(--primary);"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Reviews Container -->
+                    <div id="reviews-list" class="space-y-3 max-h-[480px] overflow-y-auto pr-1">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PAYMENT SECTION -->
+            <div id="section-payment" class="space-y-5 hidden">
+                <div class="cute-card p-5 reveal-item">
+                    <div class="text-center mb-5">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-pink-50 border border-pink-100" style="color: var(--primary-dark);">ตรวจสอบชื่อบัญชีก่อนโอนเงินทุกครั้งนะคะ</span>
+                        
+                    </div>
+<!-- กล่องแจ้งโน้ตสลิป + ปุ่มคัดลอก -->
+<div class="my-3 p-3 rounded-2xl border text-center space-y-2" style="background-color: var(--surface-soft); border-color: var(--border-soft);">
+  <p class="text-xs font-medium" style="color: var(--text-main);">
+    กรุณาโน้ตสลิปว่า <span class="font-bold" style="color: var(--primary-dark);">"<span id="display-slip-note">ใช้บริการกับ love</span>"</span> ทุกครั้งนะคะ
+  </p>
+  <button
+    type="button"
+    onclick="copySlipNote()"
+    class="cute-bounce inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium border shadow-xs"
+    style="background-color: var(--surface-subcard); border-color: var(--border-soft); color: var(--primary-dark);"
+  >
+    <i class="fa-regular fa-copy"></i>
+    <span>คัดลอกข้อความโน้ตสลิป</span>
+  </button>
+</div>
+
+
+                    <!-- QR Code Box -->
+                    <div class="bg-pink-50/60 border border-pink-100 rounded-3xl p-5 text-center mb-5">
+                        <div class="w-44 h-44 mx-auto bg-white p-2.5 rounded-2xl shadow-sm border border-pink-100 flex items-center justify-center">
+                            <img id="display-qr" src="" alt="Payment QR Code" onerror="this.src='https://placehold.co/300x300/ffe5ec/e05780?text=QR+Payment'" class="w-full h-full object-contain rounded-xl">
+                        </div>
+                        <p id="display-qr-caption" class="text-xs font-medium mt-3" style="color: var(--text-main);">สแกน QR Code เพื่อชำระเงิน</p>
+                        <button type="button" onclick="openQrZoom()" class="cute-bounce mt-2 inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-1.5 rounded-full bg-white border border-pink-200" style="color: var(--primary-dark);">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                            <span>ขยายดู QR Code</span>
+                        </button>
+                    </div>
+
+                    <!-- Payment Channels List -->
+                    <div id="payment-channels-list" class="space-y-3">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= ADMIN DASHBOARD VIEW ================= -->
+        <section id="admin-view" class="hidden space-y-5">
+            <div class="cute-card p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <span class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-pink-100" style="color: var(--primary-dark);">Admin Studio</span>
+                        <h2 class="text-lg font-semibold mt-1">จัดการร้านค้าและรีวิว</h2>
+                    </div>
+                    <button type="button" onclick="resetDemoData()" class="cute-bounce text-xs px-3 py-1.5 rounded-full bg-rose-50 text-rose-600 border border-rose-200 font-medium">
+                        <i class="fa-solid fa-rotate-left mr-1"></i>รีเซ็ตข้อมูล
+                    </button>
+                </div>
+
+                <!-- Admin Sub-Tabs -->
+                <div class="grid grid-cols-4 gap-1.5 bg-pink-50/80 p-1.5 rounded-2xl mb-5 text-xs font-medium">
+                    <button type="button" onclick="switchAdminTab('profile')" id="admin-tab-profile" class="admin-tab-btn py-2 rounded-xl btn-primary">profile</button>
+                    <button type="button" onclick="switchAdminTab('payment')" id="admin-tab-payment" class="admin-tab-btn py-2 rounded-xl text-gray-500">payment</button>
+                    <button type="button" onclick="switchAdminTab('reviews')" id="admin-tab-reviews" class="admin-tab-btn py-2 rounded-xl text-gray-500">reviews</button>
+                    <button type="button" onclick="switchAdminTab('theme')" id="admin-tab-theme" class="admin-tab-btn py-2 rounded-xl text-gray-500">theme/music</button>
+                </div>
+
+                <!-- Admin Sub-Panel 1: Profile & Social -->
+                <div id="admin-panel-profile" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium mb-1">ชื่อร้านค้า</label>
+                        <input type="text" id="admin-shop-name" class="cute-input w-full px-3.5 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium mb-1">ข้อความต้อนรับ</label>
+                        <textarea id="admin-welcome-msg" rows="2" class="cute-input w-full px-3.5 py-2 text-sm resize-none"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium mb-1">รูปโปรไฟล์ร้าน</label>
+                            <input type="file" id="admin-avatar-file" accept="image/*" onchange="handleAdminImageUpload(event, 'avatar')" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:bg-pink-100 file:text-pink-700">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium mb-1">รูปแบนเนอร์ร้าน</label>
+                            <input type="file" id="admin-banner-file" accept="image/*" onchange="handleAdminImageUpload(event, 'banner')" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:bg-pink-100 file:text-pink-700">
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-pink-100 space-y-3">
+                        <p class="text-xs font-semibold" style="color: var(--primary-dark);">ช่องทางติดต่อ (2 ช่องทาง)</p>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] mb-1">ชื่อช่องทางที่ 1</label>
+                                <input type="text" id="admin-social1-label" class="cute-input w-full px-3 py-1.5 text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] mb-1">ลิงก์ช่องทางที่ 1</label>
+                                <input type="url" id="admin-social1-url" class="cute-input w-full px-3 py-1.5 text-xs">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] mb-1">ชื่อช่องทางที่ 2</label>
+                                <input type="text" id="admin-social2-label" class="cute-input w-full px-3 py-1.5 text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] mb-1">ลิงก์ช่องทางที่ 2</label>
+                                <input type="url" id="admin-social2-url" class="cute-input w-full px-3 py-1.5 text-xs">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="saveProfileSettings()" class="cute-bounce btn-primary w-full py-2.5 rounded-full text-sm font-medium">
+                        บันทึกข้อมูลร้านค้า
+                    </button>
+                </div>
+
+                <!-- Admin Sub-Panel 2: Payment Settings -->
+                <div id="admin-panel-payment" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium mb-1">อัปโหลดรูป QR Code ชำระเงิน</label>
+                        <input type="file" accept="image/*" onchange="handleAdminImageUpload(event, 'qr')" class="block w-full text-xs text-gray-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:bg-pink-100 file:text-pink-700">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium mb-1">คำอธิบายใต้ QR Code</label>
+                        <input type="text" id="admin-qr-caption" class="cute-input w-full px-3.5 py-2 text-sm">
+                    </div>
+<div class="pt-2 border-t border-pink-100 space-y-2">
+  <label class="block text-xs font-medium">ข้อความโน้ตสลิป (หน้าชำระเงิน)</label>
+  <div class="flex gap-2">
+    <input
+      type="text"
+      id="admin-slip-note"
+      placeholder="เช่น ใช้บริการกับ love"
+      class="cute-input flex-1 px-3.5 py-2 text-xs"
+    />
+    <button
+      type="button"
+      onclick="saveSlipNote()"
+      class="cute-bounce px-4 py-2 rounded-xl text-xs font-medium btn-primary"
+    >
+      บันทึก
+    </button>
+  </div>
+</div>
+
+                    <div class="space-y-2.5 pt-2 border-t border-pink-100">
+                        <div class="flex items-center justify-between">
+                            <p class="text-xs font-semibold" style="color: var(--primary-dark);">บัญชีรับเงิน</p>
+                            <button type="button" onclick="addPaymentChannelRow()" class="text-xs px-2.5 py-1 rounded-full bg-pink-50 border border-pink-200 font-medium" style="color: var(--primary-dark);">+ เพิ่มบัญชี</button>
+                        </div>
+                        <div id="admin-payment-rows" class="space-y-2.5"></div>
+                    </div>
+
+                    <button type="button" onclick="savePaymentSettings()" class="cute-bounce btn-primary w-full py-2.5 rounded-full text-sm font-medium">
+                        บันทึกช่องทางชำระเงิน
+                    </button>
+                </div>
+
+                <!-- Admin Sub-Panel 3: Review Moderation -->
+                <div id="admin-panel-reviews" class="hidden space-y-4">
+                    <div class="bg-pink-50/70 border border-pink-100 rounded-2xl p-3.5 space-y-2.5">
+                        <p class="text-xs font-semibold" style="color: var(--primary-dark);">เพิ่มรีวิวเครดิตด่วน (สำหรับแอดมิน)</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="admin-new-rev-name" placeholder="ชื่อลูกค้า / Anonymous" class="cute-input px-3 py-1.5 text-xs">
+                            <select id="admin-new-rev-rating" class="cute-input px-3 py-1.5 text-xs">
+                                <option value="5">5 หัวใจ</option>
+                                <option value="4">4 หัวใจ</option>
+                                <option value="3">3 หัวใจ</option>
+                                <option value="2">2 หัวใจ</option>
+                                <option value="1">1 หัวใจ</option>
+                            </select>
+                        </div>
+                        <input type="text" id="admin-new-rev-text" placeholder="ข้อความรีวิว (เว้นว่างได้)" class="cute-input w-full px-3 py-1.5 text-xs">
+                        <button type="button" onclick="adminAddReview()" class="cute-bounce btn-primary w-full py-2 rounded-full text-xs font-medium">
+                            + เพิ่มรีวิวเข้าระบบ
+                        </button>
+                    </div>
+
+                    <div id="admin-reviews-list" class="space-y-2 max-h-72 overflow-y-auto pr-1"></div>
+                </div>
+
+                <!-- Admin Sub-Panel 4: Theme & Music -->
+                <div id="admin-panel-theme" class="hidden space-y-4">
+                    <div class="flex items-center justify-between p-3.5 rounded-2xl border" style="background-color: var(--surface-soft); border-color: var(--border-soft);">
+                        <div>
+                            <p class="text-xs font-semibold">โหมดการแสดงผล (สว่าง / มืด)</p>
+                            <p id="admin-mode-label" class="text-[11px] mt-0.5" style="color: var(--text-muted);">โหมดสว่างพาสเทล (Light Mode)</p>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="cute-bounce px-3.5 py-1.5 rounded-full btn-primary text-xs font-medium flex items-center gap-1.5">
+                            <i id="admin-mode-btn-icon" class="fa-solid fa-moon"></i>
+                            <span id="admin-mode-btn-text">เปลี่ยนเป็นโหมดมืด</span>
+                        </button>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium mb-2">เลือกโทนสีพาสเทลของร้าน</label>
+                        <div id="theme-palette-grid" class="grid grid-cols-3 gap-2"></div>
+                    </div>
+
+                    <div class="pt-2 border-t space-y-2.5" style="border-color: var(--border-soft);">
+                        <label class="block text-xs font-medium">วงล้อสี & ใส่โค้ดสีเอง (Custom Color)</label>
+                        <div class="p-3.5 rounded-2xl border flex items-center gap-4" style="background-color: var(--surface-subcard); border-color: var(--border-soft);">
+                            <label class="color-wheel-ring cursor-pointer flex items-center justify-center cute-bounce" title="แตะเพื่อเลือกสีจากวงล้อสี">
+                                <input type="color" id="admin-custom-color-picker" value="#ff85a2" oninput="handleCustomColorInput(this.value)" class="opacity-0 w-full h-full cursor-pointer absolute inset-0">
+                                <span id="custom-color-swatch" class="w-12 h-12 rounded-full border-2 border-white shadow-inner pointer-events-none" style="background-color: #ff85a2;"></span>
+                            </label>
+                            <div class="flex-1 space-y-2 min-w-0">
+                                <span class="block text-[11px]" style="color: var(--text-muted);">แตะวงล้อหรือพิมพ์รหัสสี HEX</span>
+                                <div class="flex items-center gap-2">
+                                    <input type="text" id="admin-custom-hex-input" value="#FF85A2" maxlength="7" oninput="handleCustomHexTextInput(this.value)" placeholder="#FF85A2" class="cute-input w-full px-3 py-1.5 text-xs font-mono uppercase">
+                                    <button type="button" onclick="applyCustomHexFromInput()" class="cute-bounce px-3 py-1.5 rounded-full btn-primary text-xs font-medium shrink-0">ใช้สี</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-pink-100 space-y-2.5">
+                        <label class="block text-xs font-medium">ลิงก์เพลง (เล่นเบื้องหลัง)</label>
+                        <input type="text" id="admin-yt-url" placeholder="https://youtu.be/... หรือ https://www.youtube.com/watch?v=..." class="cute-input w-full px-3.5 py-2 text-xs">
+                        <input type="text" id="admin-song-title" placeholder="ชื่อเพลงที่แสดงบนแถบฟังเพลง" class="cute-input w-full px-3.5 py-2 text-xs">
+                        <button type="button" onclick="saveThemeAndMusic()" class="cute-bounce btn-primary w-full py-2.5 rounded-full text-sm font-medium">
+                            บันทึกธีมและเพลง
+                        </button>
+                    </div>
+
+                    <div class="pt-2 border-t border-pink-100">
+                        <label class="block text-xs font-medium mb-1">เปลี่ยนรหัสผ่านแอดมิน</label>
+                        <div class="flex gap-2">
+                            <input type="password" id="admin-new-pin" placeholder="รหัสผ่านใหม่" class="cute-input flex-1 px-3.5 py-2 text-xs">
+                            <button type="button" onclick="changeAdminPin()" class="cute-bounce px-4 py-2 rounded-full bg-pink-100 text-xs font-medium" style="color: var(--primary-dark);">อัปเดต</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Floating Cute Music Pill -->
+    <div id="music-pill" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 cute-card px-4 py-2.5 flex items-center gap-3 shadow-lg max-w-xs w-11/12">
+        <button id="btn-music-toggle" type="button" onclick="toggleMusicPlayback()" class="cute-bounce w-9 h-9 rounded-full btn-primary flex items-center justify-center text-xs shrink-0" title="เล่น/หยุดเพลง">
+            <i id="music-play-icon" class="fa-solid fa-play ml-0.5"></i>
+        </button>
+
+        <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-1.5">
+                <span id="music-track-title" class="text-xs font-medium truncate">Sweetie Lo-Fi Melody</span>
+                <div id="music-eq" class="flex items-end gap-0.5 h-3.5 shrink-0">
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                    <span class="eq-bar"></span>
+                </div>
+            </div>
+            <p id="music-status-text" class="text-[10px]" style="color: var(--text-muted);">แตะเพื่อเปิดเพลง</p>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyALduEMgPlkw0kJ6wA0-pn8o3c807nd1Cg",
+            authDomain: "bibi-3edc0.firebaseapp.com",
+            projectId: "bibi-3edc0",
+            storageBucket: "bibi-3edc0.firebasestorage.app",
+            messagingSenderId: "1048537121847",
+            appId: "1:1048537121847:web:a98aa6c64709185d55ebb2",
+            measurementId: "G-3L77WZCBN4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storeDocRef = doc(db, "stores", "lovely_store_data");
+
+        /* =========================================================================
+           1. STATE & DEFAULT DATA
+           ========================================================================= */
+        const STORAGE_KEY = 'sweetie_store_credit_v1';
+
+        const THEMES = {
+            sakura: {
+                name: 'Sakura Pink',
+                primary: '#ff85a2',
+                primaryLight: '#ffb3c6',
+                primarySoft: '#ffe5ec',
+                primaryBg: '#fff8fa',
+                primaryDark: '#e05780',
+                textMain: '#5c434a',
+                textMuted: '#9e7e87'
+            },
+            peach: {
+                name: 'Peach Cream',
+                primary: '#ff9e7d',
+                primaryLight: '#ffc2ad',
+                primarySoft: '#ffece6',
+                primaryBg: '#fffaf8',
+                primaryDark: '#e06d48',
+                textMain: '#5e463e',
+                textMuted: '#9e8177'
+            },
+            lavender: {
+                name: 'Taro Lavender',
+                primary: '#a78bfa',
+                primaryLight: '#c4b5fd',
+                primarySoft: '#ede9fe',
+                primaryBg: '#faf8ff',
+                primaryDark: '#7c3aed',
+                textMain: '#473e5c',
+                textMuted: '#7e7499'
+            },
+            mint: {
+                name: 'Matcha Mint',
+                primary: '#4fd1c5',
+                primaryLight: '#81e6d9',
+                primarySoft: '#e6fffa',
+                primaryBg: '#f7fffd',
+                primaryDark: '#2c9a90',
+                textMain: '#365451',
+                textMuted: '#6d918d'
+            },
+            butter: {
+                name: 'Honey Butter',
+                primary: '#f6ad55',
+                primaryLight: '#fbd38d',
+                primarySoft: '#fefcbf',
+                primaryBg: '#fffdf5',
+                primaryDark: '#d97706',
+                textMain: '#5c4b33',
+                textMuted: '#968060'
+            },
+            sky: {
+                name: 'Cloud Sky',
+                primary: '#63b3ed',
+                primaryLight: '#90cdf4',
+                primarySoft: '#ebf8ff',
+                primaryBg: '#f7fbff',
+                primaryDark: '#3182ce',
+                textMain: '#384d61',
+                textMuted: '#6e879e'
+            }
+        };
+
+        const DEFAULT_STATE = {
+            adminPin: '1234',
+            themeKey: 'sakura',
+            customColor: '',
+            darkMode: false,
+            profile: {
+                shopName: 'lovely',
+                welcomeMsg: 'ยินดีต้อนรับค่ะ',
+                avatar: 'https://placehold.co/240x240/ffe5ec/e05780?text=lovely',
+                banner: 'https://placehold.co/800x320/ffe5ec/e05780?text=lovely',
+                social1: { label: 'LINE Official', url: 'https://line.me' },
+                social2: { label: 'Instagram', url: 'https://instagram.com' }
+            },
+            payment: {
+                qrImage: 'https://placehold.co/300x300/ffe5ec/e05780?text=PromptPay+QR',
+                qrCaption: 'สแกนพร้อมเพย์ / QR Code เพื่อชำระเงิน',
+                channels: [
+                    { id: 'pay-1', method: 'พร้อมเพย์ (PromptPay)', accountName: 'น.ส. หวานใจ รักบริการ', accountNumber: '081-234-5678' },
+                    { id: 'pay-2', method: 'กสิกรไทย (KBANK)', accountName: 'น.ส. หวานใจ รักบริการ', accountNumber: '123-4-56789-0' }
+                ]
+            },
+                        music: {
+                youtubeUrl: '',
+                mp3Url: './bgm.mp3',
+                songTitle: 'Chime Melody',
+                isPlaying: false
+            },
+
+            reviews: [
+                {
+                    id: 'rev-1',
+                    name: 'มินนี่',
+                    avatar: '',
+                    rating: 5,
+                    text: 'ตอบไวมากค่ะ ส่งของเรียบร้อยน่ารักสุด ๆ เดี๋ยวมาอุดหนุนซ้ำแน่นอนค่า',
+                    createdAt: Date.now() - 86400000 * 2
+                },
+                {
+                    id: 'rev-2',
+                    name: 'Anonymous',
+                    avatar: '',
+                    rating: 5,
+                    text: '+1 เครดิตแน่น ๆ ค่ะ ดูแลดีมาก',
+                    createdAt: Date.now() - 86400000
+                },
+                {
+                    id: 'rev-3',
+                    name: 'น้องไข่หวาน',
+                    avatar: '',
+                    rating: 4,
+                    text: 'น่ารักมากเลยค่ะ รอของแป๊บเดียวก็ได้แล้ว',
+                    createdAt: Date.now() - 3600000 * 5
+                }
+            ],
+            slipNote: 'ใช้บริการกับ love',
+        };
+
+        function normalizeLoadedState(parsed) {
+            return {
+                ...structuredClone(DEFAULT_STATE),
+                ...(parsed || {}),
+                darkMode: typeof parsed?.darkMode === 'boolean' ? parsed.darkMode : false,
+                profile: { ...structuredClone(DEFAULT_STATE.profile), ...(parsed?.profile || {}) },
+                payment: { ...structuredClone(DEFAULT_STATE.payment), ...(parsed?.payment || {}) },
+                                music: {
+                    ...structuredClone(DEFAULT_STATE.music),
+                    ...(parsed?.music || {}),
+                    mp3Url: parsed?.music?.mp3Url ?? DEFAULT_STATE.music.mp3Url
+                },
+                reviews: Array.isArray(parsed?.reviews) ? parsed.reviews : structuredClone(DEFAULT_STATE.reviews)
+            };
+        }
+
+        let state = loadState();
+        let selectedRating = 5;
+        let currentFilter = 'all';
+        let pendingReviewAvatar = '';
+        let adminDraftImages = { avatar: '', banner: '', qr: '' };
+        let ytPlayer = null;
+        let ytApiReady = false;
+        let toneSynth = null;
+        let synthLoopInterval = null;
+        let isRemoteSyncing = false;
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return structuredClone(DEFAULT_STATE);
+                return normalizeLoadedState(JSON.parse(raw));
+            } catch (err) {
+                console.error('Failed to load state:', err);
+                return structuredClone(DEFAULT_STATE);
+            }
+        }
+
+        async function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (err) {
+                console.error('Failed to save local state:', err);
+                showToast('พื้นที่จัดเก็บเบราว์เซอร์เต็ม ลองใช้รูปขนาดเล็กลงนะคะ', 'error');
+            }
+
+            if (!isRemoteSyncing) {
+                try {
+                    const payload = {
+                        ...structuredClone(state),
+                        music: {
+                            ...structuredClone(state.music),
+                            isPlaying: false
+                        },
+                        updatedAt: Date.now()
+                    };
+                    await setDoc(storeDocRef, payload);
+                } catch (err) {
+                    console.error('Failed to sync to Firestore:', err);
+                }
+            }
+        }
+
+        function startRealtimeSync() {
+            onSnapshot(storeDocRef, (snapshot) => {
+                if (!snapshot.exists()) {
+                    setDoc(storeDocRef, {
+                        ...structuredClone(state),
+                        music: { ...structuredClone(state.music), isPlaying: false },
+                        updatedAt: Date.now()
+                    }).catch((err) => console.error('Initial Firestore seed error:', err));
+                    return;
+                }
+
+                const remoteData = snapshot.data();
+                const currentPlaying = state.music.isPlaying;
+                isRemoteSyncing = true;
+                state = normalizeLoadedState(remoteData);
+                state.music.isPlaying = currentPlaying;
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                } catch (_) {}
+                isRemoteSyncing = false;
+
+                renderAll();
+                if (!document.getElementById('admin-view').classList.contains('hidden')) {
+                    if (!document.getElementById('admin-panel-reviews').classList.contains('hidden')) {
+                        renderAdminReviewsList();
+                    }
+                    if (!document.getElementById('admin-panel-theme').classList.contains('hidden')) {
+                        renderThemePalette();
+                    }
+                }
+            }, (err) => {
+                console.error('Firestore listener error:', err);
+            });
+        }
+
+        /* =========================================================================
+           2. SOUND EFFECTS (TONE.JS) & UI FEEDBACK
+           ========================================================================= */
+        async function playCuteSound(type = 'pop') {
+            try {
+                if (typeof Tone === 'undefined') return;
+                if (Tone.context.state !== 'running') {
+                    await Tone.start();
+                }
+                const fxSynth = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.005, decay: 0.09, sustain: 0, release: 0.08 }
+                }).toDestination();
+                fxSynth.volume.value = -10;
+
+                if (type === 'heart') {
+                    fxSynth.triggerAttackRelease('C6', '16n', Tone.now());
+                    fxSynth.triggerAttackRelease('E6', '16n', Tone.now() + 0.06);
+                } else if (type === 'success') {
+                    fxSynth.triggerAttackRelease('G5', '16n', Tone.now());
+                    fxSynth.triggerAttackRelease('C6', '8n', Tone.now() + 0.08);
+                } else {
+                    fxSynth.triggerAttackRelease('A5', '32n', Tone.now());
+                }
+                setTimeout(() => fxSynth.dispose(), 500);
+            } catch (_) {
+                // Ignore audio context restrictions before user gesture
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const isError = type === 'error';
+            const iconClass = isError ? 'fa-circle-exclamation' : 'fa-heart';
+
+            toast.className = `px-4 py-2.5 rounded-2xl shadow-lg text-xs font-medium flex items-center gap-2.5 pointer-events-auto transition-all duration-300 opacity-0 -translate-y-2 ${isError ? 'bg-rose-500 text-white border border-rose-400' : 'border'}`;
+            if (!isError) {
+                toast.style.backgroundColor = 'var(--surface-elevated)';
+                toast.style.borderColor = 'var(--border-soft)';
+                toast.style.color = 'var(--text-main)';
+            }
+            toast.innerHTML = `<i class="fa-solid ${iconClass}" style="color: ${isError ? '#fff' : 'var(--primary)'};"></i><span>${escapeHtml(message)}</span>`;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('opacity-0', '-translate-y-2');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 2600);
+        }
+
+        function openModal(htmlContent) {
+            const overlay = document.getElementById('modal-overlay');
+            const box = document.getElementById('modal-box');
+            box.innerHTML = htmlContent;
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            requestAnimationFrame(() => {
+                overlay.classList.remove('opacity-0');
+                box.classList.remove('scale-95');
+                box.classList.add('scale-100');
+            });
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            const box = document.getElementById('modal-box');
+            overlay.classList.add('opacity-0');
+            box.classList.remove('scale-100');
+            box.classList.add('scale-95');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+            }, 250);
+        }
+
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function formatRelativeTime(timestamp) {
+    const diffSec = Math.max(1, Math.floor((Date.now() - timestamp) / 1000));
+    if (diffSec < 60) return 'Just now';
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `${diffMin}m ago`;
+    const diffHour = Math.floor(diffMin / 60);
+    if (diffHour < 24) return `${diffHour}h ago`;
+
+    const diffDay = Math.floor(diffHour / 24);
+    if (diffDay < 7) return `${diffDay}d ago`;
+
+    return new Date(timestamp).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    });
+
+        
+        }
+
+        /* =========================================================================
+           3. THEME ENGINE & RENDERING
+           ========================================================================= */
+        function applyDarkMode(isDark) {
+            const dark = Boolean(isDark);
+            document.body.classList.toggle('dark-mode', dark);
+
+            const headerIcon = document.getElementById('darkmode-icon');
+            if (headerIcon) {
+                headerIcon.className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+
+            const modeLabel = document.getElementById('admin-mode-label');
+            const modeBtnIcon = document.getElementById('admin-mode-btn-icon');
+            const modeBtnText = document.getElementById('admin-mode-btn-text');
+            if (modeLabel) {
+                modeLabel.textContent = dark ? 'โหมดมืดพาสเทล (Dark Mode)' : 'โหมดสว่างพาสเทล (Light Mode)';
+            }
+            if (modeBtnIcon) {
+                modeBtnIcon.className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+            if (modeBtnText) {
+                modeBtnText.textContent = dark ? 'เปลี่ยนเป็นโหมดสว่าง' : 'เปลี่ยนเป็นโหมดมืด';
+            }
+        }
+
+        function toggleDarkMode() {
+            state.darkMode = !state.darkMode;
+            saveState();
+            applyTheme(state.themeKey);
+            renderStatsAndReviews();
+            renderPayment();
+            playCuteSound('pop');
+            showToast(state.darkMode ? 'เปิดโหมดมืดแล้วค่ะ' : 'เปิดโหมดสว่างแล้วค่ะ');
+        }
+
+        function normalizeHex(hex) {
+            if (!hex) return null;
+            let cleaned = String(hex).trim();
+            if (!cleaned.startsWith('#')) cleaned = '#' + cleaned;
+            if (/^#[0-9a-fA-F]{3}$/.test(cleaned)) {
+                cleaned = '#' + cleaned[1] + cleaned[1] + cleaned[2] + cleaned[2] + cleaned[3] + cleaned[3];
+            }
+            if (/^#[0-9a-fA-F]{6}$/.test(cleaned)) {
+                return cleaned.toLowerCase();
+            }
+            return null;
+        }
+
+        function hexToRgb(hex) {
+            const norm = normalizeHex(hex) || '#ff85a2';
+            const num = parseInt(norm.slice(1), 16);
+            return {
+                r: (num >> 16) & 255,
+                g: (num >> 8) & 255,
+                b: num & 255
+            };
+        }
+
+        function rgbToHex(r, g, b) {
+            const clamp = (n) => Math.max(0, Math.min(255, Math.round(n)));
+            return '#' + [clamp(r), clamp(g), clamp(b)]
+                .map(x => x.toString(16).padStart(2, '0'))
+                .join('');
+        }
+
+        function mixHex(hexA, hexB, weightB) {
+            const a = hexToRgb(hexA);
+            const b = hexToRgb(hexB);
+            const w = Math.max(0, Math.min(1, weightB));
+            return rgbToHex(
+                a.r + (b.r - a.r) * w,
+                a.g + (b.g - a.g) * w,
+                a.b + (b.b - a.b) * w
+            );
+        }
+
+        function buildPaletteFromHex(baseHex, isDark) {
+            const primary = normalizeHex(baseHex) || '#ff85a2';
+            const { r, g, b } = hexToRgb(primary);
+            return {
+                primary,
+                primaryLight: mixHex(primary, '#ffffff', 0.30),
+                primarySoft: isDark ? `rgba(${r}, ${g}, ${b}, 0.15)` : mixHex(primary, '#ffffff', 0.82),
+                primaryBg: isDark ? mixHex('#0e0a0d', primary, 0.06) : mixHex(primary, '#ffffff', 0.94),
+                primaryDark: isDark ? mixHex(primary, '#ffffff', 0.42) : mixHex(primary, '#3d1e28', 0.42),
+                textMain: isDark ? '#f5eaee' : '#5c434a',
+                textMuted: isDark ? '#b89aa4' : '#9e7e87'
+            };
+        }
+
+        function applyTheme(themeKey) {
+            const isDark = Boolean(state.darkMode);
+            const customHex = normalizeHex(state.customColor);
+            const baseTheme = THEMES[themeKey] || THEMES.sakura;
+            const palette = customHex
+                ? buildPaletteFromHex(customHex, isDark)
+                : {
+                    primary: baseTheme.primary,
+                    primaryLight: baseTheme.primaryLight,
+                    primarySoft: isDark ? 'rgba(255, 133, 162, 0.14)' : baseTheme.primarySoft,
+                    primaryBg: isDark ? '#0e0a0d' : baseTheme.primaryBg,
+                    primaryDark: isDark ? baseTheme.primaryLight : baseTheme.primaryDark,
+                    textMain: isDark ? '#f5eaee' : baseTheme.textMain,
+                    textMuted: isDark ? '#b89aa4' : baseTheme.textMuted
+                };
+
+            const root = document.documentElement;
+            root.style.setProperty('--primary', palette.primary);
+            root.style.setProperty('--primary-light', palette.primaryLight);
+            root.style.setProperty('--primary-soft', palette.primarySoft);
+            root.style.setProperty('--primary-bg', palette.primaryBg);
+            root.style.setProperty('--primary-dark', palette.primaryDark);
+            root.style.setProperty('--text-main', palette.textMain);
+            root.style.setProperty('--text-muted', palette.textMuted);
+            applyDarkMode(isDark);
+            syncCustomColorControls(customHex || palette.primary);
+        }
+
+        function renderAll() {
+            applyTheme(state.themeKey);
+            renderProfile();
+            renderStatsAndReviews();
+            renderPayment();
+            renderMusicPill();
+            observeRevealElements();
+            renderSlipNote();
+        }
+
+        function renderProfile() {
+            const { shopName, welcomeMsg, avatar, banner, social1, social2 } = state.profile;
+            document.title = `${shopName} | Store & Credit`;
+            document.getElementById('display-shop-name').textContent = shopName;
+            document.getElementById('display-welcome-msg').textContent = welcomeMsg;
+            document.getElementById('display-avatar').src = avatar || 'https://placehold.co/240x240/ffe5ec/e05780?text=Sweetie';
+            document.getElementById('display-banner').src = banner || 'https://placehold.co/800x320/ffe5ec/e05780?text=Sweetie+Store';
+
+            const socialContainer = document.getElementById('social-links-container');
+            const items = [
+                { data: social1, icon: 'fa-comment-dots' },
+                { data: social2, icon: 'fa-heart' }
+            ];
+            socialContainer.innerHTML = items.map((item, idx) => {
+                const safeUrl = sanitizeUrl(item.data?.url || '#');
+                const label = escapeHtml(item.data?.label || `ช่องทางที่ ${idx + 1}`);
+                return `
+                    <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" onclick="playCuteSound('pop')"
+                       class="cute-bounce py-2.5 px-3 rounded-2xl bg-pink-50/90 hover:bg-pink-100/80 border border-pink-100 text-xs font-medium flex items-center justify-center gap-2 truncate"
+                       style="color: var(--primary-dark);">
+                        <i class="fa-solid ${item.icon}"></i>
+                        <span class="truncate">${label}</span>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function sanitizeUrl(url) {
+            const trimmed = (url || '').trim();
+            if (/^https?:\/\//i.test(trimmed)) return trimmed;
+            return '#';
+        }
+
+        function renderStatsAndReviews() {
+            const reviews = state.reviews;
+            const total = reviews.length;
+            const avg = total > 0
+                ? (reviews.reduce((sum, r) => sum + Number(r.rating || 5), 0) / total).toFixed(1)
+                : '5.0';
+
+            document.getElementById('stat-avg-badge').textContent = `${avg} / 5.0`;
+            document.getElementById('stat-count-badge').textContent = `${total} รีวิว`;
+            document.getElementById('summary-avg-score').textContent = avg;
+            document.getElementById('summary-total-reviews').textContent = total;
+
+            const roundedHearts = Math.round(parseFloat(avg));
+            let summaryHeartsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                summaryHeartsHtml += `<i class="${i <= roundedHearts ? 'fa-solid' : 'fa-regular'} fa-heart"></i>`;
+            }
+            document.getElementById('summary-hearts').innerHTML = summaryHeartsHtml;
+
+            selectRating(selectedRating, false);
+
+            const filtered = currentFilter === 'all'
+                ? reviews
+                : reviews.filter(r => Number(r.rating) === Number(currentFilter));
+
+            const listEl = document.getElementById('reviews-list');
+            if (filtered.length === 0) {
+                listEl.innerHTML = `
+                    <div class="text-center py-8 px-4 rounded-2xl bg-pink-50/50 border border-dashed border-pink-200">
+                        <i class="fa-regular fa-face-smile-wink text-2xl mb-2" style="color: var(--primary);"></i>
+                        <p class="text-xs font-medium" style="color: var(--text-muted);">ยังไม่มีรีวิวในหมวดนี้เลยค่ะ</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = filtered.map(rev => {
+                const displayName = escapeHtml((rev.name || '').trim() || 'Anonymous');
+                const ratingNum = Math.min(5, Math.max(1, Number(rev.rating) || 5));
+                let hearts = '';
+                for (let i = 1; i <= 5; i++) {
+                    hearts += `<i class="${i <= ratingNum ? 'fa-solid' : 'fa-regular'} fa-heart text-xs" style="color: var(--primary);"></i>`;
+                }
+
+                const avatarHtml = rev.avatar
+                    ? `<img src="${rev.avatar}" alt="${displayName}" onerror="this.style.display='none'" class="w-10 h-10 rounded-2xl object-cover border border-pink-100 shrink-0">`
+                    : `<div class="w-10 h-10 rounded-2xl bg-pink-100/80 flex items-center justify-center text-xs font-semibold shrink-0" style="color: var(--primary-dark);">${escapeHtml(displayName.charAt(0).toUpperCase())}</div>`;
+
+                return `
+                    <article class="p-3.5 rounded-2xl border shadow-2xs flex gap-3 items-start transition-all" style="background-color: var(--surface-subcard); border-color: var(--border-soft);">
+                        ${avatarHtml}
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-xs font-semibold truncate">${displayName}</span>
+                                <span class="text-[10px] shrink-0" style="color: var(--text-muted);">${formatRelativeTime(rev.createdAt)}</span>
+                            </div>
+                            <div class="flex items-center gap-0.5 mt-0.5">${hearts}</div>
+                            <p class="text-xs mt-1.5 leading-relaxed break-words" style="color: var(--text-main);">${escapeHtml(rev.text)}</p>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        function renderPayment() {
+            const { qrImage, qrCaption, channels } = state.payment;
+            document.getElementById('display-qr').src = qrImage || 'https://placehold.co/300x300/ffe5ec/e05780?text=PromptPay+QR';
+            document.getElementById('display-qr-caption').textContent = qrCaption || 'สแกน QR Code เพื่อชำระเงิน';
+
+            const container = document.getElementById('payment-channels-list');
+            if (!channels || channels.length === 0) {
+                container.innerHTML = `<p class="text-center text-xs py-4" style="color: var(--text-muted);">ยังไม่ได้เพิ่มบัญชีธนาคาร</p>`;
+                return;
+            }
+
+            container.innerHTML = channels.map((ch) => `
+                <div class="p-4 rounded-2xl border flex items-center justify-between gap-3" style="background-color: var(--surface-subcard); border-color: var(--border-soft);">
+                    <div class="min-w-0">
+                        <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-pink-50" style="color: var(--primary-dark);">${escapeHtml(ch.method)}</span>
+                        <p class="text-sm font-bold tracking-wide mt-1.5 select-all" style="color: var(--text-main);">${escapeHtml(ch.accountNumber)}</p>
+                        <p class="text-xs truncate" style="color: var(--text-muted);">${escapeHtml(ch.accountName)}</p>
+                    </div>
+                    <button type="button" onclick="copyAccountNumber('${escapeHtml(ch.accountNumber)}')" class="cute-bounce shrink-0 px-3.5 py-2 rounded-2xl bg-pink-50 hover:bg-pink-100 border border-pink-200 text-xs font-medium flex items-center gap-1.5" style="color: var(--primary-dark);">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>คัดลอก</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function copyAccountNumber(numberText) {
+            playCuteSound('pop');
+            const tempInput = document.createElement('input');
+            tempInput.value = numberText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                showToast(`คัดลอกเลขบัญชี ${numberText} แล้วค่ะ`);
+            } catch (_) {
+                showToast('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาเลือกข้อความเองนะคะ', 'error');
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        function openQrZoom() {
+            playCuteSound('pop');
+            const src = document.getElementById('display-qr').src;
+            const caption = escapeHtml(state.payment.qrCaption || 'QR Code');
+            openModal(`
+                <div class="text-center space-y-3">
+                    <h3 class="text-sm font-semibold">${caption}</h3>
+                    <img src="${src}" alt="Zoomed QR" class="w-64 h-64 mx-auto object-contain rounded-2xl border border-pink-100 p-2 bg-pink-50/40">
+                    <button type="button" onclick="closeModal()" class="cute-bounce btn-primary w-full py-2 rounded-full text-xs font-medium">ปิดหน้าต่าง</button>
+                </div>
+            `);
+        }
+
+        /* =========================================================================
+           4. TABS, RATING SELECTOR & REVIEW SUBMISSION
+           ========================================================================= */
+        function switchMainTab(tabName) {
+            playCuteSound('pop');
+            const btnReviews = document.getElementById('tab-btn-reviews');
+            const btnPayment = document.getElementById('tab-btn-payment');
+            const secReviews = document.getElementById('section-reviews');
+            const secPayment = document.getElementById('section-payment');
+
+            if (tabName === 'reviews') {
+                btnReviews.className = 'flex-1 py-2.5 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center gap-2 btn-primary';
+                btnPayment.className = 'flex-1 py-2.5 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center gap-2 text-gray-500 hover:bg-pink-50/70';
+                secReviews.classList.remove('hidden');
+                secPayment.classList.add('hidden');
+            } else {
+                btnPayment.className = 'flex-1 py-2.5 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center gap-2 btn-primary';
+                btnReviews.className = 'flex-1 py-2.5 px-4 rounded-2xl text-sm font-medium transition-all flex items-center justify-center gap-2 text-gray-500 hover:bg-pink-50/70';
+                secPayment.classList.remove('hidden');
+                secReviews.classList.add('hidden');
+            }
+            observeRevealElements();
+        }
+
+        function selectRating(val, playFx = true) {
+            selectedRating = val;
+            if (playFx) playCuteSound('heart');
+            const buttons = document.querySelectorAll('#heart-selector .heart-btn');
+            buttons.forEach(btn => {
+                const bVal = Number(btn.getAttribute('data-val'));
+                const icon = btn.querySelector('i');
+                if (bVal <= val) {
+                    icon.className = 'fa-solid fa-heart';
+                    btn.style.color = 'var(--primary)';
+                } else {
+                    icon.className = 'fa-regular fa-heart';
+                    btn.style.color = '#d1b3bc';
+                }
+            });
+        }
+
+        function filterReviews(filterVal) {
+            playCuteSound('pop');
+            currentFilter = filterVal;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const f = btn.getAttribute('data-filter');
+                const isActive = String(f) === String(filterVal);
+                const layoutClass = f === 'all' ? '' : 'inline-flex items-center gap-0.5';
+                btn.className = `filter-btn px-2.5 py-1 rounded-full transition-all ${layoutClass} ${
+                    isActive ? 'active font-medium shadow-xs' : ''
+                }`;
+                btn.style.backgroundColor = isActive ? 'var(--surface-pill-active)' : 'transparent';
+                btn.style.color = isActive ? 'var(--primary-dark)' : 'var(--text-muted)';
+            });
+            renderStatsAndReviews();
+        }
+
+        function handleReviewAvatarPreview(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            readImageFileAsDataUrl(file, 200, (dataUrl) => {
+                pendingReviewAvatar = dataUrl;
+                const img = document.getElementById('review-avatar-preview');
+                const icon = document.getElementById('review-avatar-icon');
+                img.src = dataUrl;
+                img.classList.remove('hidden');
+                icon.classList.add('hidden');
+            });
+        }
+
+        function submitReview(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('review-name-input');
+            const textInput = document.getElementById('review-text-input');
+
+            const rawName = (nameInput.value || '').trim();
+            const rawText = (textInput.value || '').trim();
+
+            const finalName = rawName || 'Anonymous';
+            const finalText = rawText || '+1';
+            const finalRating = rawText ? selectedRating : 5;
+
+            const newReview = {
+                id: `rev-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+                name: finalName,
+                avatar: pendingReviewAvatar,
+                rating: finalRating,
+                text: finalText,
+                createdAt: Date.now()
+            };
+
+            state.reviews.unshift(newReview);
+            saveState();
+
+            nameInput.value = '';
+            textInput.value = '';
+            pendingReviewAvatar = '';
+            document.getElementById('review-avatar-input').value = '';
+            document.getElementById('review-avatar-preview').classList.add('hidden');
+            document.getElementById('review-avatar-icon').classList.remove('hidden');
+            selectRating(5, false);
+
+            playCuteSound('success');
+            showToast(`ขอบคุณ ${finalName} สำหรับรีวิวน่ารัก ๆ ค่ะ`);
+            renderStatsAndReviews();
+        }
+
+        /* =========================================================================
+           5. IMAGE COMPRESSION / RESIZE HELPER
+           ========================================================================= */
+        function readImageFileAsDataUrl(file, maxDimension, callback) {
+            if (!file || !file.type.startsWith('image/')) {
+                showToast('กรุณาเลือกไฟล์รูปภาพนะคะ', 'error');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    let { width, height } = img;
+                    if (width > maxDimension || height > maxDimension) {
+                        if (width > height) {
+                            height = Math.round((height * maxDimension) / width);
+                            width = maxDimension;
+                        } else {
+                            width = Math.round((width * maxDimension) / height);
+                            height = maxDimension;
+                        }
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    callback(canvas.toDataURL('image/jpeg', 0.82));
+                };
+                img.onerror = () => showToast('ไม่สามารถอ่านรูปภาพนี้ได้ค่ะ', 'error');
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        /* =========================================================================
+           6. ADMIN AUTHENTICATION & STUDIO CONTROLS
+           ========================================================================= */
+        function openAdminLogin() {
+            playCuteSound('pop');
+            if (!document.getElementById('admin-view').classList.contains('hidden')) {
+                return;
+            }
+            openModal(`
+                <div class="space-y-4">
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-2xl bg-pink-100 mx-auto flex items-center justify-center text-lg mb-2" style="color: var(--primary-dark);">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <h3 class="text-base font-semibold">เข้าสู่ระบบหลังบ้าน</h3>
+                        
+                    </div>
+                    <form onsubmit="verifyAdminLogin(event)" class="space-y-3">
+                        <input type="password" id="login-pin-input" placeholder="กรอกรหัสผ่านแอดมิน" class="cute-input w-full px-4 py-2.5 text-sm text-center tracking-widest" required autofocus>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="closeModal()" class="flex-1 py-2 rounded-full bg-gray-100 text-xs font-medium text-gray-600">ยกเลิก</button>
+                            <button type="submit" class="cute-bounce flex-1 py-2 rounded-full btn-primary text-xs font-medium">เข้าใช้งาน</button>
+                        </div>
+                    </form>
+                </div>
+            `);
+        }
+
+        function verifyAdminLogin(event) {
+            event.preventDefault();
+            const pin = document.getElementById('login-pin-input').value.trim();
+            if (pin === state.adminPin) {
+                closeModal();
+                enterAdminMode();
+                playCuteSound('success');
+                showToast('ยินดีต้อนรับสู่โหมดจัดการร้านค้าค่ะ');
+            } else {
+                playCuteSound('pop');
+                showToast('รหัสผ่านไม่ถูกต้องนะคะ', 'error');
+            }
+        }
+
+        function enterAdminMode() {
+            document.getElementById('client-view').classList.add('hidden');
+            document.getElementById('admin-view').classList.remove('hidden');
+            document.getElementById('btn-back-client').classList.remove('hidden');
+            populateAdminForms();
+            switchAdminTab('profile');
+        }
+
+        function exitAdminMode() {
+            playCuteSound('pop');
+            document.getElementById('admin-view').classList.add('hidden');
+            document.getElementById('client-view').classList.remove('hidden');
+            document.getElementById('btn-back-client').classList.add('hidden');
+            renderAll();
+        }
+
+        function switchAdminTab(tabName) {
+            playCuteSound('pop');
+            const tabs = ['profile', 'payment', 'reviews', 'theme'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`admin-tab-${t}`);
+                const panel = document.getElementById(`admin-panel-${t}`);
+                if (t === tabName) {
+                    btn.className = 'admin-tab-btn py-2 rounded-xl btn-primary';
+                    panel.classList.remove('hidden');
+                } else {
+                    btn.className = 'admin-tab-btn py-2 rounded-xl text-gray-500';
+                    panel.classList.add('hidden');
+                }
+            });
+
+            if (tabName === 'reviews') renderAdminReviewsList();
+            if (tabName === 'theme') renderThemePalette();
+        }
+
+        function populateAdminForms() {
+            adminDraftImages = { avatar: '', banner: '', qr: '' };
+            document.getElementById('admin-shop-name').value = state.profile.shopName;
+            document.getElementById('admin-welcome-msg').value = state.profile.welcomeMsg;
+            document.getElementById('admin-social1-label').value = state.profile.social1?.label || '';
+            document.getElementById('admin-social1-url').value = state.profile.social1?.url || '';
+            document.getElementById('admin-social2-label').value = state.profile.social2?.label || '';
+            document.getElementById('admin-social2-url').value = state.profile.social2?.url || '';
+
+            document.getElementById('admin-qr-caption').value = state.payment.qrCaption || '';
+            renderAdminPaymentRows();
+
+            document.getElementById('admin-yt-url').value = state.music.youtubeUrl || '';
+            document.getElementById('admin-song-title').value = state.music.songTitle || '';
+          const slipNoteInput = document.getElementById('admin-slip-note');
+if (slipNoteInput) slipNoteInput.value = state.slipNote || 'ใช้บริการกับ love';
+
+        }
+
+        function handleAdminImageUpload(event, targetKey) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            const maxDim = targetKey === 'banner' ? 900 : 400;
+            readImageFileAsDataUrl(file, maxDim, (dataUrl) => {
+                adminDraftImages[targetKey] = dataUrl;
+                showToast('เตรียมรูปภาพเรียบร้อย กดบันทึกเพื่อยืนยันค่ะ');
+            });
+        }
+
+        function saveProfileSettings() {
+            state.profile.shopName = document.getElementById('admin-shop-name').value.trim() || 'lovely';
+            state.profile.welcomeMsg = document.getElementById('admin-welcome-msg').value.trim();
+            state.profile.social1 = {
+                label: document.getElementById('admin-social1-label').value.trim() || 'LINE',
+                url: document.getElementById('admin-social1-url').value.trim()
+            };
+            state.profile.social2 = {
+                label: document.getElementById('admin-social2-label').value.trim() || 'Instagram',
+                url: document.getElementById('admin-social2-url').value.trim()
+            };
+
+            if (adminDraftImages.avatar) state.profile.avatar = adminDraftImages.avatar;
+            if (adminDraftImages.banner) state.profile.banner = adminDraftImages.banner;
+
+            saveState();
+            renderProfile();
+            playCuteSound('success');
+            showToast('บันทึกข้อมูลโปรไฟล์ร้านแล้วค่ะ');
+        }
+
+        function renderAdminPaymentRows() {
+            const container = document.getElementById('admin-payment-rows');
+            const channels = state.payment.channels || [];
+            container.innerHTML = channels.map((ch, idx) => `
+                <div class="p-3 rounded-2xl bg-pink-50/50 border border-pink-100 space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <input type="text" value="${escapeHtml(ch.method)}" data-pay-idx="${idx}" data-field="method" placeholder="ธนาคาร / ช่องทาง" class="pay-field cute-input flex-1 px-3 py-1.5 text-xs">
+                        <button type="button" onclick="removePaymentChannelRow(${idx})" class="text-xs px-2.5 py-1 rounded-full bg-rose-100 text-rose-600">ลบ</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" value="${escapeHtml(ch.accountNumber)}" data-pay-idx="${idx}" data-field="accountNumber" placeholder="เลขบัญชี / เบอร์" class="pay-field cute-input px-3 py-1.5 text-xs">
+                        <input type="text" value="${escapeHtml(ch.accountName)}" data-pay-idx="${idx}" data-field="accountName" placeholder="ชื่อบัญชี" class="pay-field cute-input px-3 py-1.5 text-xs">
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function collectAdminPaymentRowsFromDom() {
+            const rowsMap = {};
+            document.querySelectorAll('.pay-field').forEach(input => {
+                const idx = Number(input.getAttribute('data-pay-idx'));
+                const field = input.getAttribute('data-field');
+                if (!rowsMap[idx]) rowsMap[idx] = { id: `pay-${idx + 1}`, method: '', accountNumber: '', accountName: '' };
+                rowsMap[idx][field] = input.value.trim();
+            });
+            return Object.values(rowsMap).filter(r => r.method || r.accountNumber || r.accountName);
+        }
+
+        function addPaymentChannelRow() {
+            const current = collectAdminPaymentRowsFromDom();
+            current.push({ id: `pay-${Date.now()}`, method: 'ธนาคารใหม่', accountNumber: '', accountName: '' });
+            state.payment.channels = current;
+            renderAdminPaymentRows();
+        }
+
+        function removePaymentChannelRow(idx) {
+            const current = collectAdminPaymentRowsFromDom();
+            current.splice(idx, 1);
+            state.payment.channels = current;
+            renderAdminPaymentRows();
+        }
+
+        function savePaymentSettings() {
+            state.payment.qrCaption = document.getElementById('admin-qr-caption').value.trim();
+            if (adminDraftImages.qr) state.payment.qrImage = adminDraftImages.qr;
+            state.payment.channels = collectAdminPaymentRowsFromDom();
+            saveState();
+            renderPayment();
+            playCuteSound('success');
+            showToast('บันทึกช่องทางชำระเงินแล้วค่ะ');
+        }
+
+        function adminAddReview() {
+            const name = (document.getElementById('admin-new-rev-name').value || '').trim() || 'Anonymous';
+            const rating = Number(document.getElementById('admin-new-rev-rating').value) || 5;
+            const text = (document.getElementById('admin-new-rev-text').value || '').trim() || '+1';
+
+            state.reviews.unshift({
+                id: `rev-${Date.now()}`,
+                name,
+                avatar: '',
+                rating,
+                text,
+                createdAt: Date.now()
+            });
+            saveState();
+            document.getElementById('admin-new-rev-name').value = '';
+            document.getElementById('admin-new-rev-text').value = '';
+            renderAdminReviewsList();
+            renderStatsAndReviews();
+            playCuteSound('success');
+            showToast('เพิ่มรีวิวเข้าระบบแล้วค่ะ');
+        }
+
+        function renderAdminReviewsList() {
+            const container = document.getElementById('admin-reviews-list');
+            if (!state.reviews.length) {
+                container.innerHTML = `<p class="text-center text-xs py-4" style="color: var(--text-muted);">ไม่มีรีวิวในระบบ</p>`;
+                return;
+            }
+            container.innerHTML = state.reviews.map(rev => {
+                const count = Math.min(5, Math.max(1, Number(rev.rating) || 5));
+                const heartsHtml = Array.from({ length: count }, () => `<i class="fa-solid fa-heart text-[10px]" style="color: var(--primary);"></i>`).join('');
+                return `
+                    <div class="p-3 rounded-2xl bg-pink-50/50 border border-pink-100 flex items-center justify-between gap-2 text-xs">
+                        <div class="min-w-0">
+                            <span class="font-semibold">${escapeHtml(rev.name)}</span>
+                            <span class="ml-1.5 inline-flex items-center gap-0.5">${heartsHtml}</span>
+                            <p class="truncate mt-0.5" style="color: var(--text-muted);">${escapeHtml(rev.text)}</p>
+                        </div>
+                        <button type="button" onclick="deleteReviewById('${rev.id}')" class="shrink-0 px-2.5 py-1 rounded-full bg-rose-100 text-rose-600 font-medium">ลบ</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteReviewById(id) {
+            state.reviews = state.reviews.filter(r => r.id !== id);
+            saveState();
+            renderAdminReviewsList();
+            renderStatsAndReviews();
+            playCuteSound('pop');
+            showToast('ลบรีวิวเรียบร้อยแล้วค่ะ');
+        }
+
+        function renderThemePalette() {
+            const grid = document.getElementById('theme-palette-grid');
+            const hasCustom = Boolean(normalizeHex(state.customColor));
+            grid.innerHTML = Object.entries(THEMES).map(([key, t]) => {
+                const active = !hasCustom && state.themeKey === key;
+                return `
+                    <button type="button" onclick="selectThemeKey('${key}')"
+                            class="p-2.5 rounded-2xl border text-left flex items-center gap-2 transition-all ${
+                                active ? 'border-2 font-semibold' : ''
+                            }" style="background-color: ${active ? 'var(--surface-soft)' : 'var(--surface-subcard)'}; border-color: ${active ? t.primary : 'var(--border-soft)'};">
+                        <span class="w-5 h-5 rounded-full shrink-0 shadow-2xs" style="background: linear-gradient(135deg, ${t.primary}, ${t.primaryLight});"></span>
+                        <span class="text-[11px] truncate">${t.name}</span>
+                    </button>
+                `;
+            }).join('');
+            syncCustomColorControls(normalizeHex(state.customColor) || THEMES[state.themeKey]?.primary || '#ff85a2');
+        }
+
+        function syncCustomColorControls(hex) {
+            const norm = normalizeHex(hex) || '#ff85a2';
+            const picker = document.getElementById('admin-custom-color-picker');
+            const hexInput = document.getElementById('admin-custom-hex-input');
+            const swatch = document.getElementById('custom-color-swatch');
+            if (picker && picker.value.toLowerCase() !== norm) picker.value = norm;
+            if (hexInput && document.activeElement !== hexInput) hexInput.value = norm.toUpperCase();
+            if (swatch) swatch.style.backgroundColor = norm;
+        }
+
+        function handleCustomColorInput(val) {
+            const norm = normalizeHex(val);
+            if (!norm) return;
+            state.customColor = norm;
+            saveState();
+            applyTheme(state.themeKey);
+            renderThemePalette();
+        }
+
+        function handleCustomHexTextInput(val) {
+            const norm = normalizeHex(val);
+            const swatch = document.getElementById('custom-color-swatch');
+            const picker = document.getElementById('admin-custom-color-picker');
+            if (norm) {
+                if (swatch) swatch.style.backgroundColor = norm;
+                if (picker) picker.value = norm;
+            }
+        }
+
+        function applyCustomHexFromInput() {
+            const raw = document.getElementById('admin-custom-hex-input')?.value || '';
+            const norm = normalizeHex(raw);
+            if (!norm) {
+                showToast('กรุณาใส่รหัสสี HEX 6 หลัก เช่น #FF85A2 ค่ะ', 'error');
+                return;
+            }
+            state.customColor = norm;
+            saveState();
+            applyTheme(state.themeKey);
+            renderThemePalette();
+            playCuteSound('heart');
+            showToast(`ใช้โค้ดสี ${norm.toUpperCase()} แล้วค่ะ`);
+        }
+
+        function selectThemeKey(key) {
+            state.themeKey = key;
+            state.customColor = '';
+            saveState();
+            applyTheme(key);
+            renderThemePalette();
+            playCuteSound('heart');
+            showToast(`เปลี่ยนธีมเป็น ${THEMES[key].name} แล้วค่ะ`);
+        }
+
+        function saveThemeAndMusic() {
+            const ytUrl = document.getElementById('admin-yt-url').value.trim();
+            const songTitle = document.getElementById('admin-song-title').value.trim();
+            state.music.youtubeUrl = ytUrl;
+            if (songTitle) {
+                state.music.songTitle = songTitle;
+            } else if (ytUrl) {
+                state.music.songTitle = 'YouTube Background Track';
+            }
+            saveState();
+            renderMusicPill();
+            loadYouTubeVideoIfNeeded(state.music.isPlaying);
+            playCuteSound('success');
+            showToast('บันทึกการตั้งค่าธีมและเพลงแล้วค่ะ');
+        }
+
+        function changeAdminPin() {
+            const newPin = document.getElementById('admin-new-pin').value.trim();
+            if (newPin.length < 4) {
+                showToast('กรุณาตั้งรหัสผ่านอย่างน้อย 4 ตัวอักษรค่ะ', 'error');
+                return;
+            }
+            state.adminPin = newPin;
+            document.getElementById('admin-new-pin').value = '';
+            saveState();
+            playCuteSound('success');
+            showToast('อัปเดตรหัสผ่านแอดมินเรียบร้อยค่ะ');
+        }   function copySlipNote() {
+  const text = (state.slipNote || 'ใช้บริการกับ love').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    if (typeof playCuteSound === 'function') playCuteSound('pop');
+    if (typeof showToast === 'function') {
+      showToast(`คัดลอก "${text}" เรียบร้อยค่ะ`);
+    }
+  });
+}
+
+function saveSlipNote() {
+  const input = document.getElementById('admin-slip-note');
+  if (!input) return;
+  state.slipNote = input.value.trim() || 'ใช้บริการกับ love';
+  saveState();
+  renderSlipNote();
+  if (typeof playCuteSound === 'function') playCuteSound('success');
+  if (typeof showToast === 'function') {
+    showToast('บันทึกข้อความโน้ตสลิปเรียบร้อยค่ะ');
+  }
+}
+
+function renderSlipNote() {
+  const note = state.slipNote || 'ใช้บริการกับ love';
+  const displayEl = document.getElementById('display-slip-note');
+  if (displayEl) displayEl.textContent = note;
+}
+
+
+        function resetDemoData() {
+            state = structuredClone(DEFAULT_STATE);
+            saveState();
+            populateAdminForms();
+            renderAll();
+            playCuteSound('pop');
+            showToast('รีเซ็ตข้อมูลร้านค้าเป็นค่าเริ่มต้นแล้วค่ะ');
+        }
+
+        /* =========================================================================
+           7. BACKGROUND MUSIC PLAYER (YOUTUBE + TONE.JS MELODY FALLBACK)
+           ========================================================================= */
+        function extractYouTubeId(url) {
+            if (!url) return null;
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+                /^([a-zA-Z0-9_-]{11})$/
+            ];
+            for (const p of patterns) {
+                const match = url.trim().match(p);
+                if (match && match[1]) return match[1];
+            }
+            return null;
+        }
+
+        function initYouTubeApi() {
+            if (window.YT && window.YT.Player) {
+                ytApiReady = true;
+                return;
+            }
+            window.onYouTubeIframeAPIReady = function () {
+                ytApiReady = true;
+                if (state.music.isPlaying) {
+                    loadYouTubeVideoIfNeeded(true);
+                }
+            };
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(tag);
+        }
+
+        function loadYouTubeVideoIfNeeded(shouldPlay) {
+            const vidId = extractYouTubeId(state.music.youtubeUrl);
+            if (!vidId || !ytApiReady || !window.YT || !window.YT.Player) return false;
+
+            if (!ytPlayer) {
+                ytPlayer = new YT.Player('yt-player', {
+                    height: '180',
+                    width: '240',
+                    videoId: vidId,
+                    playerVars: {
+                        autoplay: shouldPlay ? 1 : 0,
+                        loop: 1,
+                        playlist: vidId,
+                        controls: 0
+                    },
+                    events: {
+                        onReady: (e) => {
+                            if (shouldPlay) e.target.playVideo();
+                        }
+                    }
+                });
+            } else {
+                if (typeof ytPlayer.loadVideoById === 'function') {
+                    if (shouldPlay) ytPlayer.loadVideoById(vidId);
+                    else if (typeof ytPlayer.cueVideoById === 'function') ytPlayer.cueVideoById(vidId);
+                }
+            }
+            return true;
+        }
+        let bgmAudio = null;
+
+        function getMp3Src() {
+            const raw = (state.music.mp3Url || state.music.youtubeUrl || '').trim();
+            if (/\.mp3(\?|#|$)/i.test(raw) || raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('data:audio/')) {
+                return raw;
+            }
+            return './bgm.mp3';
+        }
+
+        function ensureBgmAudio() {
+            const src = getMp3Src();
+            if (!bgmAudio) {
+                bgmAudio = new Audio();
+                bgmAudio.loop = true;
+                bgmAudio.preload = 'auto';
+                bgmAudio.playsInline = true;
+                bgmAudio.setAttribute('playsinline', '');
+                bgmAudio.setAttribute('webkit-playsinline', '');
+            }
+            if (bgmAudio.getAttribute('data-src') !== src) {
+                bgmAudio.src = src;
+                bgmAudio.setAttribute('data-src', src);
+                bgmAudio.load();
+            }
+            return bgmAudio;
+        }
+
+        function stopBgmAudio() {
+            if (bgmAudio) {
+                try {
+                    bgmAudio.pause();
+                } catch (_) {}
+            }
+        }
+
+        async function startCuteSynthLoop() {
+            stopCuteSynthLoop();
+            if (typeof Tone === 'undefined') return;
+            try {
+                if (Tone.context && Tone.context.state !== 'running') {
+                    await Tone.start();
+                    if (typeof Tone.context.resume === 'function') {
+                        await Tone.context.resume();
+                    }
+                }
+                if (!toneSynth) {
+                    toneSynth = new Tone.PolySynth(Tone.Synth, {
+                        oscillator: { type: 'sine' },
+                        envelope: { attack: 0.03, decay: 0.25, sustain: 0.15, release: 0.6 }
+                    }).toDestination();
+                    toneSynth.volume.value = -10;
+                }
+                const notes = ['C5', 'E5', 'G5', 'B5', 'A5', 'G5', 'E5', 'D5'];
+                let step = 0;
+                const playStep = () => {
+                    if (!state.music.isPlaying) return;
+                    if (Tone.context && Tone.context.state !== 'running') {
+                        Tone.start().catch(() => {});
+                    }
+                    toneSynth.triggerAttackRelease(notes[step % notes.length], '8n');
+                    step++;
+                };
+                playStep();
+                synthLoopInterval = setInterval(playStep, 520);
+            } catch (_) {}
+        }
+
+
+        function stopCuteSynthLoop() {
+            if (synthLoopInterval) {
+                clearInterval(synthLoopInterval);
+                synthLoopInterval = null;
+            }
+        }
+
+                async function toggleMusicPlayback() {
+            const nextPlaying = !state.music.isPlaying;
+            state.music.isPlaying = nextPlaying;
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (_) {}
+
+            if (nextPlaying) {
+                stopCuteSynthLoop();
+                if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+                    try { ytPlayer.pauseVideo(); } catch (_) {}
+                }
+
+                const audio = ensureBgmAudio();
+                audio.muted = false;
+                audio.volume = 1.0;
+
+                try {
+                    const playPromise = audio.play();
+                    if (playPromise && typeof playPromise.then === 'function') {
+                        await playPromise;
+                    }
+                    renderMusicPill();
+                    return;
+                } catch (_) {
+                    stopBgmAudio();
+                }
+
+                const vidId = extractYouTubeId(state.music.youtubeUrl);
+                if (vidId && ytApiReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                    try {
+                        ytPlayer.unMute();
+                        ytPlayer.setVolume(100);
+                        ytPlayer.playVideo();
+                        renderMusicPill();
+                        return;
+                    } catch (_) {}
+                } else if (vidId && loadYouTubeVideoIfNeeded(true)) {
+                    renderMusicPill();
+                    return;
+                }
+
+                await startCuteSynthLoop();
+            } else {
+                stopBgmAudio();
+                stopCuteSynthLoop();
+                if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+                    try { ytPlayer.pauseVideo(); } catch (_) {}
+                }
+            }
+            renderMusicPill();
+        }
+
+
+        function renderMusicPill() {
+            const playing = Boolean(state.music.isPlaying);
+            const icon = document.getElementById('music-play-icon');
+            const eq = document.getElementById('music-eq');
+            const titleEl = document.getElementById('music-track-title');
+            const statusEl = document.getElementById('music-status-text');
+
+            icon.className = playing ? 'fa-solid fa-pause' : 'fa-solid fa-play ml-0.5';
+            titleEl.textContent = state.music.songTitle || 'Chime Melody';
+            if (playing) {
+                eq.classList.add('playing');
+                statusEl.textContent = extractYouTubeId(state.music.youtubeUrl) ? 'กำลังเล่นเพลง' : 'now playing';
+            } else {
+                eq.classList.remove('playing');
+                statusEl.textContent = 'แตะเพื่อเปิดเพลง';
+            }
+        }
+
+        function openMusicModal() {
+            playCuteSound('pop');
+            openModal(`
+                <div class="space-y-4">
+                    <div class="text-center">
+                        <h3 class="text-base font-semibold">ตั้งค่าเพลงพื้นหลัง</h3>
+                        <p class="text-xs mt-0.5" style="color: var(--text-muted);">ใส่ลิงก์เพลงหรือปล่อยว่างเพื่อใช้เมโลดี้ร้าน</p>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div>
+                            <label class="block text-xs font-medium mb-1">ลิงก์ YouTube</label>
+                            <input type="text" id="modal-yt-url" value="${escapeHtml(state.music.youtubeUrl || '')}" placeholder="https://youtu.be/..." class="cute-input w-full px-3.5 py-2 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium mb-1">ชื่อเพลง</label>
+                            <input type="text" id="modal-song-title" value="${escapeHtml(state.music.songTitle || '')}" placeholder="ชื่อเพลง" class="cute-input w-full px-3.5 py-2 text-xs">
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="closeModal()" class="flex-1 py-2 rounded-full bg-gray-100 text-xs font-medium text-gray-600">ปิด</button>
+                        <button type="button" onclick="applyMusicModalSettings()" class="cute-bounce flex-1 py-2 rounded-full btn-primary text-xs font-medium">บันทึกเพลง</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function applyMusicModalSettings() {
+            const url = document.getElementById('modal-yt-url').value.trim();
+            const title = document.getElementById('modal-song-title').value.trim();
+            state.music.youtubeUrl = url;
+            state.music.songTitle = title || (url ? 'YouTube Background Track' : 'Chime Melody');
+            saveState();
+            renderMusicPill();
+            loadYouTubeVideoIfNeeded(state.music.isPlaying);
+            closeModal();
+            playCuteSound('success');
+            showToast('อัปเดตเพลงพื้นหลังแล้วค่ะ');
+        }
+
+        /* =========================================================================
+           8. SCROLL REVEAL, GLOBAL BINDINGS & INITIALIZATION
+           ========================================================================= */
+        let revealObserver = null;
+
+        function observeRevealElements() {
+            if (!revealObserver && 'IntersectionObserver' in window) {
+                revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            revealObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.08 });
+            }
+
+            document.querySelectorAll('.reveal-item').forEach(el => {
+                if (revealObserver) {
+                    revealObserver.observe(el);
+                } else {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        Object.assign(window, {
+            toggleDarkMode,
+            openAdminLogin,
+            exitAdminMode,
+            closeModal,
+            switchMainTab,
+            openAdminLogin,
+            exitAdminMode,
+            selectRating,
+            filterReviews,
+            handleReviewAvatarPreview,
+            submitReview,
+            openQrZoom,
+            copyAccountNumber,
+            verifyAdminLogin,
+            switchAdminTab,
+            handleAdminImageUpload,
+            saveProfileSettings,
+            addPaymentChannelRow,
+            removePaymentChannelRow,
+            savePaymentSettings,
+            adminAddReview,
+            deleteReviewById,
+            handleCustomColorInput,
+            handleCustomHexTextInput,
+            applyCustomHexFromInput,
+            selectThemeKey,
+            saveThemeAndMusic,
+            changeAdminPin,
+            copySlipNote,
+  saveSlipNote,
+
+            resetDemoData,
+            toggleMusicPlayback,
+            openMusicModal,
+            applyMusicModalSettings
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderAll();
+            startRealtimeSync();
+            initYouTubeApi();
+
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                const app = document.getElementById('app-wrapper');
+                loader.classList.add('opacity-0');
+                app.classList.remove('opacity-0');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 700);
+            }, 650);
+        });
+    </script>
+</body>
+</html>
